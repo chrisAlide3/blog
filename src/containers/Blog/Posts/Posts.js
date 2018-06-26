@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import axios from 'axios';
+// import { Link } from 'react-router-dom';
 
 import './Posts.css';
 
@@ -32,7 +33,7 @@ class Posts extends Component {
     }
 
     selectPostHandler = (id) => {
-        this.setState({postId: id});
+        this.props.history.push('/'+id);
     }
 
 
@@ -40,12 +41,26 @@ class Posts extends Component {
 
         const posts = this.state.posts.map(post => {
             
-            return <Post 
-                        key={post.id} 
-                        title={post.title} 
-                        author={post.author}
-                        clicked={()=>this.selectPostHandler(post.id)}
-                    />
+            return (
+                // We can handle the click event with a Route Link element
+               
+                // <Link to={"/" + post.id} key={post.id}>
+                //     <Post 
+                //         title={post.title} 
+                //         author={post.author}
+                //     />
+                // </Link>
+
+                //Or through the click handler of the Post and call a function
+                //to handle the route change. The function has the props of the route
+                //so we can use this
+                <Post 
+                title={post.title} 
+                author={post.author}
+                clicked={()=>this.selectPostHandler(post.id)}
+            />
+
+            );
         });
 
         return (
