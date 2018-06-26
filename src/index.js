@@ -14,20 +14,20 @@ import axios from 'axios';
 //Axios interceptors are global, they will be executed in all programms of the app
 axios.interceptors.request.use( request => {
     //Do something with the request then return
-    console.log(request);
+    // console.log(request);
     return request;
 }, error => {
-    console.log(error);
-    return Promise.reject(error);
+    // console.log(error);
+    // return Promise.reject(error);
     
 })
 
 axios.interceptors.response.use( response => {
     //Do something with the response then return
-    console.log(response);
+    // console.log(response);
     return response;
 }, error => {
-    console.log(error);
+    // console.log(error);
     return Promise.reject(error);
     
 })
