@@ -10,10 +10,20 @@ class FullPost extends Component {
     }
 
     componentDidMount () {
+        this.loadPost();
+    }
+
+    componentDidUpdate () {
+        this.loadPost();
+    }
+
+    loadPost = () => {
         const {id} = this.props.match.params;
+        //The received ID is a string, our database ID however is a number
+        // In the below comparision we convert the received ID to a number. For this just add a + in front of the string value
         if (id) {
 
-            if (!this.state.loadedPost || (this.state.loadedPost && this.state.loadedPost.id !== this.props.id)) {
+            if (!this.state.loadedPost || (this.state.loadedPost && this.state.loadedPost.id !== +id)) {
                 axios.get('https://jsonplaceholder.typicode.com/posts/'+id)
                 .then(response => {
                     this.setState({loadedPost: response.data});
@@ -26,9 +36,10 @@ class FullPost extends Component {
     }
 
     deletePostHandler = () => {
-        axios.delete('https://jsonplaceholder.typicode.com/posts/' + this.props.id)
+        axios.delete('https://jsonplaceholder.typicode.com/posts/' + this.props.match.params.id)
         .then(response => {
             console.log(response);
+            alert("Post deleted");
         })
         .catch(err => {
             console.log(err);
@@ -37,7 +48,7 @@ class FullPost extends Component {
 
     render () {
         let post = <p style={{textAlign: 'center'}}>Please select a Post!</p>;
-        if (this.props.id) {
+        if (this.props.match.params.id) {
             post = <p style={{textAlign: 'center'}}>Loading...</p>;
         }
         if (this.state.loadedPost) {

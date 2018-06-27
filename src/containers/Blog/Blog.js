@@ -1,9 +1,10 @@
 import React, { Component } from 'react';
-import { Route, NavLink, Switch } from 'react-router-dom';
+import { Route, NavLink, Switch, Redirect } from 'react-router-dom';
+
 import './Blog.css';
 import Posts from './Posts/Posts';
 import NewPost from './NewPost/NewPost';
-import FullPost from './FullPost/FullPost';
+// import FullPost from './FullPost/FullPost';
 
 class Blog extends Component {
 
@@ -15,7 +16,7 @@ class Blog extends Component {
                     <nav>
                         <ul>
                          {/*You also can override the active class to your class or style it inline with activeStyle object*/}
-                            <li><NavLink to="/" 
+                            <li><NavLink to="/posts" 
                                         exact
                                         // activeClassName="my-active"
                                         // activeStyle={{
@@ -35,15 +36,24 @@ class Blog extends Component {
                     </nav>
                 </header>
                 {/*With render we can render any JSX code
-                 <Route path='/' exact render={() => <h1>Home</h1>} /> */}
+                 <Route path='/posts' exact render={() => <h1>Home</h1>} /> */}
 
                  {/* With component we render a React component */}
-                 {/* With switch the 1st child that match path get rendered, others don't. The order is important! */}
-                 <Route path="/" exact component={Posts} />
-                 <Switch>
+
+                 {/* Here we redirect the root path "/" to another path "/posts" */}
+                {/* <Route path="/" exact render={() => (
+                    <Redirect to="/posts" /> )}/>
+                <Route path="/new-post" exact component={NewPost} />
+                <Route path="/posts" component={Posts} /> */}
+
+                {/* With switch the 1st child that match path get rendered, others don't. The order is important! */}
+                <Switch>
                     <Route path="/new-post" exact component={NewPost} />
-                    <Route path="/:id" exact component={FullPost} />
-                 </Switch>
+                    <Route path="/posts" component={Posts} />
+                    <Redirect from="/" to="/posts" />
+
+                {/* <Route path="/posts/:id" exact component={FullPost} /> */}
+                </Switch>
 
 
             </div>

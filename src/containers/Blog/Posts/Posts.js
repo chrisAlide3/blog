@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import axios from 'axios';
-// import { Link } from 'react-router-dom';
+import FullPost from '../FullPost/FullPost';
+import { Route } from 'react-router-dom';
 
 import './Posts.css';
 
@@ -32,8 +33,9 @@ class Posts extends Component {
             });
     }
 
+
     selectPostHandler = (id) => {
-        this.props.history.push('/'+id);
+        this.props.history.push('/posts/'+id);
     }
 
 
@@ -55,6 +57,7 @@ class Posts extends Component {
                 //to handle the route change. The function has the props of the route
                 //so we can use this
                 <Post 
+                key={post.title}
                 title={post.title} 
                 author={post.author}
                 clicked={()=>this.selectPostHandler(post.id)}
@@ -64,9 +67,13 @@ class Posts extends Component {
         });
 
         return (
+            <div>
             <section className="Posts">
                 {posts}
             </section>
+            {/* Build a dynamic route with the received URL then append the ID */}
+            <Route path={this.props.match.url + '/:id'} exact component={FullPost} />
+    §       </div>
         )
     }
 }
